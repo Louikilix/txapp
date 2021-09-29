@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+<h1> <%= @writing_definition.definition %> </h1>
+<p>by <%= link_to @writing_definition.user.name, @writing_definition.user %></p>
+<% if @writing_definition.user == current_user %>
+  <%= link_to 'Edit the definition', edit_writing_definition_path(@writing_definition) %>
+<% end %>
+
+<div>
+  <%= form_with(model: [@writing_definition, @image_element]) do |form| %>
+    <%= form.submit %>
+  <% end %>
+</div>
+
+<% @writing_definition.image_elements.each do |im| %>
+  <% if im != @writing_definition.image_elements.last %>
+    <% if im.image.persisted? %>
+      <% if im.image.present? %>
+        <%= image_tag(im.image) %>
+      <%end%>
+    <%else%>
+      <%= form_with(model: [@writing_definition, im]) do |form| %>
+        <%= form.file_field :image %>
+        <%= form.submit "save" %>
+      <%end %>
+    <%end%>
+  <%end%>
+<%end%>
+<br>

@@ -60,3 +60,7 @@ gem 'bootstrap', '~> 4.3.1'
 gem "google_custom_search_api"
 
 gem 'scrapix'
+
+gem 'paperclip'
+
+gem 'bcrypt', '~> 3.1.7'

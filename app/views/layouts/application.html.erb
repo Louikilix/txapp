@@ -1,16 +1,53 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Txapp</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>txapp</title>
     <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!-- CSS Reset -->
+    <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+
+    <!-- Milligram CSS minified -->
+    <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <br>
+      <% if controller.controller_name != "site"%>
+          <%= link_to "HOME PAGE", site_home_url %>
+          <br>
+      <%end%>
+
+      <% if current_user %>
+        Hi <%= current_user.name %>
+        |
+        <% if current_user.writing_definitions.empty? %>
+          <%= link_to 'Create a writing definition', new_writing_definition_path %>
+        <% else %>
+          <%= link_to 'your writing definition', writing_definitions_path %>
+        <%end%>
+        |
+        <%= link_to 'Edit your profile', edit_user_path(current_user) %>
+        |
+        <%= link_to 'Log out', logout_path, method: :delete %>
+        <% if current_user.super_admin == true %>
+          <br>
+          <%= link_to 'Users', users_path %>
+        <%end%>
+      <% else %>
+        <%= link_to 'Log in', login_path %>
+        |
+        <%= link_to 'Sign up', new_user_path %>
+      <% end %>
+    </header>
+    <br>
+    <br>
+    <div class="container pb-5">
+      <%= yield %>
+    <div>
   </body>
 </html>

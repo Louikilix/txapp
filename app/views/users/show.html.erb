@@ -1,0 +1,10 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @user.name %></h1>
+
+<% @user.writing_definitions.each do |wd| %>
+  <h2><%= link_to wd.definition, wd %></h2>
+<% end %>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
